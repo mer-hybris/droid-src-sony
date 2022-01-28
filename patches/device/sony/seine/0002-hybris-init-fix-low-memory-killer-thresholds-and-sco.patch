@@ -1,21 +1,24 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Simonas Leleiva <simonas.leleiva@meramo.co.uk>
-Date: Wed, 30 Jun 2021 10:07:59 +0000
-Subject: [PATCH] (hybris) init: fix low memory killer thresholds and score
- values
+Date: Fri, 28 Jan 2022 09:53:19 +0000
+Subject: [PATCH] (hybris) init: improve low memory killer thresholds
 
-Set minfree to 6 times higher values, only then lmkd starts killing native
-Sailfish OS apps (otherwise it only kills within the App Support container,
+Set minfree to ~7.5 times higher values: only then lmk starts killing native
+Sailfish OS apps (otherwise only App Support's lmkd container is killing within,
 and when there are many native apps, Android apps eventually get killed upon
 launch).
 
-6-fold values have been obtained empirically. Anything lower than that will
-cause to run out of swap space eventually.
+~7.5-fold values have been obtained empirically. Anything lower than that will
+cause to run out of swap space eventually, and lmk won't kick in as much either.
+
+This fix should always leave around 100M of Mem+Swap available to be able to
+launch big apps, not to slow system down (from too much swapping), and also to
+help keeping the fingerprint running.
 
 'adj' defaults to '0,1,6,12' on this system, thus set its values to match
-Jolla C, where lmkd was fine tuned for OOM situations.
+Jolla C, where lmk was fine tuned for OOM situations.
 
-[hybris] init: fix low memory killer thresholds and score values. Fixes JB#54056
+[hybris] init: improve low memory killer thresholds. Fixes JB#56333
 
 Signed-off-by: Simonas Leleiva <simonas.leleiva@jolla.com>
 ---
@@ -31,7 +34,7 @@ index e6243fa..e8b430e 100644
      # LMK tunning
      write /sys/module/lowmemorykiller/parameters/enable_lmk 1
 -    write /sys/module/lowmemorykiller/parameters/minfree "15360,19200,23040,26880,34415,43737"
-+    write /sys/module/lowmemorykiller/parameters/minfree "92160,115200,138240,161280,206490"
++    write /sys/module/lowmemorykiller/parameters/minfree "117160,140200,163240,186280,256490"
 +    write /sys/module/lowmemorykiller/parameters/adj "0,58,147,529,1000"
      write /sys/module/lowmemorykiller/parameters/vmpressure_file_min 105984
      write /sys/module/lowmemorykiller/parameters/oom_reaper 1
