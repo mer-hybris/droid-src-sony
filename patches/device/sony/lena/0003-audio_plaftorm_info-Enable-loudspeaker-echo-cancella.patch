@@ -1,0 +1,47 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Simonas Leleiva <simonas.leleiva@meramo.co.uk>
+Date: Wed, 4 May 2022 07:49:43 +0000
+Subject: [PATCH] audio_plaftorm_info: Enable loudspeaker echo cancellation
+
+Requires mic enablement from https://github.com/sonyxperiadev/device-sony-pdx213/pull/7.
+
+During phone call via loudspeaker, 3rd party can hear their own voice echo.
+That's because echo cancellation is not enabled.
+This doesn't happen on stock device.
+Stock version uses different acdb IDs for loudspeaker and microphone device
+compared to AOSP. Here's what logs on AOSP image show when switching to
+loudspeaker mode during phone call:
+
+    audio_hw_primary: select_devices: changing use case voicemmode2-call output device from(20: voice-handset, acdb 7) to (21: voice-speaker, acdb 101)
+    audio_hw_primary: select_devices: changing use case voicemmode2-call input device from(171: voice-dmic-ef, acdb 41) to (174: voice-speaker-dmic-ef, acdb 43)
+
+And here's what stock version prints in same situation:
+
+    audio_hw_primary: select_devices: changing use case voicemmode2-call output device from(27: voice-handset, acdb 7) to (31: voice-speaker-stereo, acdb 15)
+    audio_hw_primary: select_devices: changing use case voicemmode2-call input device from(195: voice-dmic-ef, acdb 41) to (178: voice-speaker-mic, acdb 11)
+
+This commit overrides voice-speaker-dmic-ef acdb ID to match that of stock,
+thus enabling echo cancellation in loudspeaker mode.
+
+It is however suboptimal, because we are not certain how the stock
+devices (voice-speaker-stereo and voice-speaker-mic) are optimised.
+
+Guidelines for further investigation: https://github.com/sonyxperiadev/device-sony-seine/pull/42
+
+Signed-off-by: Simonas Leleiva <simonas.leleiva@jolla.com>
+---
+ rootdir/vendor/etc/audio_platform_info.xml | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/rootdir/vendor/etc/audio_platform_info.xml b/rootdir/vendor/etc/audio_platform_info.xml
+index df356afa143e7f74aecebb92c5f346516fb2f059..45e1eec8a731b838198378ca3113946b05798bbd 100644
+--- a/rootdir/vendor/etc/audio_platform_info.xml
++++ b/rootdir/vendor/etc/audio_platform_info.xml
+@@ -113,6 +113,7 @@
+         <device name="SND_DEVICE_IN_UNPROCESSED_QUAD_MIC" acdb_id="146"/>
+         <device name="SND_DEVICE_IN_UNPROCESSED_HEADSET_MIC" acdb_id="147"/>
+         <device name="SND_DEVICE_IN_HANDSET_GENERIC_QMIC" acdb_id="191"/>
++        <device name="SND_DEVICE_IN_VOICE_SPEAKER_DMIC" acdb_id="11"/>
+         <device name="SND_DEVICE_OUT_VOICE_TTY_HCO_HANDSET" acdb_id="7" />
+     </acdb_ids>
+     <backend_names>
