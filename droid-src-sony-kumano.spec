@@ -105,7 +105,7 @@ Source100: droid-src-sony-seine.spec.tmpl\
 %define __strip /bin/true
 
 Summary: 	Droid SRC package for %{ha_device}%{?dhs_flavour:, %{dhs_flavour} flavour}
-License: 	BSD-3-Clause
+License: 	BSD
 Name: 		%{dhs_name_hardcoded}
 Version: 	0.0.0.1
 # timestamped releases are used only for HADK (mb2) builds
@@ -779,7 +779,13 @@ cat <<"EOF" > droid-make
 # ubu-chroot with the correct lunch setup
 # It is only intended to run in the OBS builders
 
-exec ubu-chroot -r /srv/mer/sdks/ubu "%{?pre_actions}; source build/envsetup.sh; lunch %{?lunch_device}%{!?lunch_device:%{device}}%{?device_variant}; make $*"
+# We can check if we have new or old ubu-chroot by checking if it has the -V  option
+# added with this version.
+if ubu-chroot -V ; then
+   bash="bash -c"
+fi
+
+exec ubu-chroot -r /srv/mer/sdks/ubu ${bash} "set -o errexit; %{?pre_actions}; source build/envsetup.sh; lunch %{?lunch_device}%{!?lunch_device:%{device}}%{?device_variant}; make $*"
 EOF
 
 %{?post_build_actions}
