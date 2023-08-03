@@ -2,17 +2,19 @@
 # Replace @...@ accordingly
 
 # device is the codename for the device
-%define device pdx213
+%define device pdx235
 
-%define ha_device_override sony-lena
+%define ha_device_override sony-zambezi
 
 %include define-trees
 
 %define device_variant -user
-%define lunch_device aosp_xqbt52
+%define lunch_device aosp_xqdc54
 %define pre_actions sudo update-java-alternatives -s java-1.8.0-openjdk-amd64
 
 %define post_build_actions mv rpm/patches patches; /bin/sh ./rpm/apply-patches.sh
+
+%define dhs_no_makefile 1
 
 # Our promotions fail, because rpm v4.9 can't handle conditional macros well, see JB#33275
 # Let's work around it for now:

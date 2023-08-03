@@ -24,6 +24,7 @@ pdk
 test
 prebuilts/abi-dumps
 prebuilts/asuite
+prebuilts/bazel
 prebuilts/build-tools
 prebuilts/bundletool
 prebuilts/checkcolor
@@ -32,9 +33,7 @@ prebuilts/clang-tools
 prebuilts/clang
 prebuilts/cmdline-tools
 prebuilts/devtools
-prebuilts/fuchsia_sdk
 prebuilts/gcc
-prebuilts/gdb
 prebuilts/go
 prebuilts/gradle-plugin
 prebuilts/jdk
@@ -42,10 +41,12 @@ prebuilts/ktlint
 prebuilts/manifest-merger
 prebuilts/maven_repo
 prebuilts/misc
+prebuilts/module_sdk
 prebuilts/ndk
-prebuilts/python
 prebuilts/r8
+prebuilts/rust/Android.bp
 prebuilts/rust/linux-x86
+prebuilts/rust/soong
 prebuilts/sdk
 prebuilts/tools
 prebuilts/vndk
