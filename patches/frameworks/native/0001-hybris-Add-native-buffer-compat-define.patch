@@ -9,7 +9,7 @@ Change-Id: Iaa50a8270fc822fa3aacec07a5dcdfc467752afe
  1 file changed, 14 insertions(+)
 
 diff --git a/headers/media_plugin/media/hardware/HardwareAPI.h b/headers/media_plugin/media/hardware/HardwareAPI.h
-index ae0220a5e..05e9559a5 100644
+index ae0220a5ebfddde1286f59b1d5d6816313195499..05e9559a5a87bf801a61855df2d0122dbd94731a 100644
 --- a/headers/media_plugin/media/hardware/HardwareAPI.h
 +++ b/headers/media_plugin/media/hardware/HardwareAPI.h
 @@ -150,6 +150,12 @@ struct VideoNativeMetadata {
@@ -40,6 +40,3 @@ index ae0220a5e..05e9559a5 100644
  // A pointer to this struct is passed to OMX_SetParameter() when the extension
  // index "OMX.google.android.index.prepareForAdaptivePlayback" is given.
  //
--- 
-2.26.2
-
