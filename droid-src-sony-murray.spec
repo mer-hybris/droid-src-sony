@@ -32,7 +32,8 @@ Source52: %{dhs_name_hardcoded}.spec.tmpl\
 Source53: source.paths\
 Source54: apply-patches.sh\
 Source55: precheckin.sh\
-Source100: droid-src-sony-zambezi.spec.tmpl\
+Source100: droid-src-sony-13.spec.tmpl\
+Source101: droid-src-sony-zambezi.spec.tmpl\
 %{nil}
 
 # repo service performed : %%include dhs/droid-hal-source.inc
@@ -50,6 +51,11 @@ Source100: droid-src-sony-zambezi.spec.tmpl\
 #                    Actions to be executed after the sources have been extracted
 #                    for example patches can be applied to the sources which are
 #                    then stored in the final rpm droid-src packages.
+
+# optional you can also define these macros
+# vendor:  Vendor name that the android sources come from
+# android_version_major: Android major version that the sources represent
+# They can be used instead of ha_device name the package
 
 
 %define __provides_exclude_from ^%{_libexecdir}/droid-hybris/.*$
@@ -93,7 +99,14 @@ Source100: droid-src-sony-zambezi.spec.tmpl\
 %define dhs_feature droid-src
 %endif
 
+%if "%{vendor}" != ""
+%define dhs_name %{dhs_feature}-%{vendor}
+%if "%{android_version_major}" != ""
+%define dhs_name %{dhs_feature}-%{vendor}-%{android_version_major}
+%endif
+%else
 %define dhs_name %{dhs_feature}-%{ha_device}
+%endif
 
 # if dhs_flavour is not defined, means we're building a generic droid-src, and
 # for backwards compatibility we'll need to provide droid-bin and others
@@ -119,6 +132,9 @@ Release:	%(date +'%%Y%%m%%d%%H%%M')
 Provides:	%{dhs_feature}
 %if %{dhs_legacy}
 Provides:	droid-bin
+%endif
+%if "%{android_version_major}" != ""
+Provides: %{dhs_feature}-%{android_version_major}
 %endif
 # The repo sync service on OBS prepares a 'source tarball' of the rpm
 # dir since we currently have a complex setup with subdirs which OBS
@@ -157,6 +173,9 @@ BuildRequires:  droid-system-vendor-obsbuild
 Provides: %{dhs_feature}-full
 %if %{dhs_legacy}
 Provides: droid-bin-src-full
+%endif
+%if "%{android_version_major}" != ""
+Provides: %{dhs_feature}-%{android_version_major}-full
 %endif
 Group:  System
 AutoReqProv: no
