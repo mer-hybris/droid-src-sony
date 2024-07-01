@@ -44,6 +44,7 @@ prebuilts/misc
 prebuilts/module_sdk
 prebuilts/ndk
 prebuilts/r8
+prebuilts/remoteexecution-client
 prebuilts/rust/Android.bp
 prebuilts/rust/linux-x86
 prebuilts/rust/soong

@@ -12,7 +12,7 @@ Change-Id: Iad92c39fb729538cf51bf9d9037b15515104b453
  create mode 100644 libc/include/inaddr.h
 
 diff --git a/libc/include/arpa/inet.h b/libc/include/arpa/inet.h
-index db054c9e1d22a1ecbc38c90bfcd9d4ec06cf3076..7716b944576eed5b9285268fc7443823bc110336 100644
+index f00f2c13c2d5144668b304d0d585a364ba517f61..00a5548287b2205150758cc2afae7bee135d9a9a 100644
 --- a/libc/include/arpa/inet.h
 +++ b/libc/include/arpa/inet.h
 @@ -33,6 +33,7 @@

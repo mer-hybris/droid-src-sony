@@ -11,10 +11,10 @@
 %define ha_device_override sony-zambezi
 
 # repo service performed : %%include define-trees
-%define dhs_trees build development libcore platform_testing toolchain device libnativehelper tools art cts external vendor bionic dalvik frameworks sdk bootable hardware packages system developers kernel pdk test prebuilts/abi-dumps prebuilts/asuite prebuilts/bazel prebuilts/build-tools prebuilts/bundletool prebuilts/checkcolor prebuilts/checkstyle prebuilts/clang-tools prebuilts/clang prebuilts/cmdline-tools prebuilts/devtools prebuilts/gcc prebuilts/go prebuilts/gradle-plugin prebuilts/jdk prebuilts/ktlint prebuilts/manifest-merger prebuilts/maven_repo prebuilts/misc prebuilts/module_sdk prebuilts/ndk prebuilts/r8 prebuilts/rust/Android.bp prebuilts/rust/linux-x86 prebuilts/rust/soong prebuilts/sdk prebuilts/tools prebuilts/vndk
+%define dhs_trees build development libcore platform_testing toolchain device libnativehelper tools art cts external vendor bionic dalvik frameworks sdk bootable hardware packages system developers kernel pdk test prebuilts/abi-dumps prebuilts/asuite prebuilts/bazel prebuilts/build-tools prebuilts/bundletool prebuilts/checkcolor prebuilts/checkstyle prebuilts/clang-tools prebuilts/clang prebuilts/cmdline-tools prebuilts/devtools prebuilts/gcc prebuilts/go prebuilts/gradle-plugin prebuilts/jdk prebuilts/ktlint prebuilts/manifest-merger prebuilts/maven_repo prebuilts/misc prebuilts/module_sdk prebuilts/ndk prebuilts/r8 prebuilts/remoteexecution-client prebuilts/rust/Android.bp prebuilts/rust/linux-x86 prebuilts/rust/soong prebuilts/sdk prebuilts/tools prebuilts/vndk
 
 %define device_variant -user
-%define lunch_device aosp_xqdc54
+%define lunch_device aosp_xqdc54-ap1a
 %define pre_actions sudo update-java-alternatives -s java-1.8.0-openjdk-amd64
 
 %define post_build_actions mv rpm/patches patches; /bin/sh ./rpm/apply-patches.sh
@@ -161,7 +161,7 @@ Provides: droid-bin-src-full
 Group:  System
 AutoReqProv: no
 Requires(post): /bin/sh
-Requires: %{dhs_feature}-dhs-rootdir %{dhs_feature}-build %{dhs_feature}-development %{dhs_feature}-libcore %{dhs_feature}-platform_testing %{dhs_feature}-toolchain %{dhs_feature}-device %{dhs_feature}-libnativehelper %{dhs_feature}-tools %{dhs_feature}-art %{dhs_feature}-cts %{dhs_feature}-external %{dhs_feature}-vendor %{dhs_feature}-bionic %{dhs_feature}-dalvik %{dhs_feature}-frameworks %{dhs_feature}-sdk %{dhs_feature}-bootable %{dhs_feature}-hardware %{dhs_feature}-packages %{dhs_feature}-system %{dhs_feature}-developers %{dhs_feature}-kernel %{dhs_feature}-pdk %{dhs_feature}-test %{dhs_feature}-prebuilts-abi-dumps %{dhs_feature}-prebuilts-asuite %{dhs_feature}-prebuilts-bazel %{dhs_feature}-prebuilts-build-tools %{dhs_feature}-prebuilts-bundletool %{dhs_feature}-prebuilts-checkcolor %{dhs_feature}-prebuilts-checkstyle %{dhs_feature}-prebuilts-clang-tools %{dhs_feature}-prebuilts-clang %{dhs_feature}-prebuilts-cmdline-tools %{dhs_feature}-prebuilts-devtools %{dhs_feature}-prebuilts-gcc %{dhs_feature}-prebuilts-go %{dhs_feature}-prebuilts-gradle-plugin %{dhs_feature}-prebuilts-jdk %{dhs_feature}-prebuilts-ktlint %{dhs_feature}-prebuilts-manifest-merger %{dhs_feature}-prebuilts-maven_repo %{dhs_feature}-prebuilts-misc %{dhs_feature}-prebuilts-module_sdk %{dhs_feature}-prebuilts-ndk %{dhs_feature}-prebuilts-r8 %{dhs_feature}-prebuilts-rust-android-bp %{dhs_feature}-prebuilts-rust-linux-x86 %{dhs_feature}-prebuilts-rust-soong %{dhs_feature}-prebuilts-sdk %{dhs_feature}-prebuilts-tools %{dhs_feature}-prebuilts-vndk
+Requires: %{dhs_feature}-dhs-rootdir %{dhs_feature}-build %{dhs_feature}-development %{dhs_feature}-libcore %{dhs_feature}-platform_testing %{dhs_feature}-toolchain %{dhs_feature}-device %{dhs_feature}-libnativehelper %{dhs_feature}-tools %{dhs_feature}-art %{dhs_feature}-cts %{dhs_feature}-external %{dhs_feature}-vendor %{dhs_feature}-bionic %{dhs_feature}-dalvik %{dhs_feature}-frameworks %{dhs_feature}-sdk %{dhs_feature}-bootable %{dhs_feature}-hardware %{dhs_feature}-packages %{dhs_feature}-system %{dhs_feature}-developers %{dhs_feature}-kernel %{dhs_feature}-pdk %{dhs_feature}-test %{dhs_feature}-prebuilts-abi-dumps %{dhs_feature}-prebuilts-asuite %{dhs_feature}-prebuilts-bazel %{dhs_feature}-prebuilts-build-tools %{dhs_feature}-prebuilts-bundletool %{dhs_feature}-prebuilts-checkcolor %{dhs_feature}-prebuilts-checkstyle %{dhs_feature}-prebuilts-clang-tools %{dhs_feature}-prebuilts-clang %{dhs_feature}-prebuilts-cmdline-tools %{dhs_feature}-prebuilts-devtools %{dhs_feature}-prebuilts-gcc %{dhs_feature}-prebuilts-go %{dhs_feature}-prebuilts-gradle-plugin %{dhs_feature}-prebuilts-jdk %{dhs_feature}-prebuilts-ktlint %{dhs_feature}-prebuilts-manifest-merger %{dhs_feature}-prebuilts-maven_repo %{dhs_feature}-prebuilts-misc %{dhs_feature}-prebuilts-module_sdk %{dhs_feature}-prebuilts-ndk %{dhs_feature}-prebuilts-r8 %{dhs_feature}-prebuilts-remoteexecution-client %{dhs_feature}-prebuilts-rust-android-bp %{dhs_feature}-prebuilts-rust-linux-x86 %{dhs_feature}-prebuilts-rust-soong %{dhs_feature}-prebuilts-sdk %{dhs_feature}-prebuilts-tools %{dhs_feature}-prebuilts-vndk
 Summary: Syspart source for all the src trees to be used for droid-side code building
 %description dhs-full
 This is the full src tree for the %{dhs_name} manifest.
@@ -848,6 +848,20 @@ Summary: Source for the prebuilts-r8 src tree to be used for droid-side code bui
 This is the src tree for the prebuilts-r8 subdirectory from the %{device} manifest.
 It is only meant for use in the OBS.
 
+%package prebuilts-remoteexecution-client
+Provides: %{dhs_feature}-prebuilts-remoteexecution-client
+Group:  System
+AutoReqProv: no
+Requires: %{dhs_feature}-dhs-utils
+%if 0%{!?dhs_no_makefile:1}
+Requires: %{dhs_feature}-dhs-makefile
+%endif
+Requires(post): /bin/sh
+Summary: Source for the prebuilts-remoteexecution-client src tree to be used for droid-side code building
+%description prebuilts-remoteexecution-client
+This is the src tree for the prebuilts-remoteexecution-client subdirectory from the %{device} manifest.
+It is only meant for use in the OBS.
+
 %package prebuilts-rust-android-bp
 Provides: %{dhs_feature}-prebuilts-rust-android-bp
 Group:  System
@@ -1373,6 +1387,13 @@ chown -R 399:399 /home/abuild/src/droid/prebuilts/r8
 %files prebuilts-r8
 %defattr(-,root,root,-)
 /home/abuild/src/droid/prebuilts/r8
+
+%post prebuilts-remoteexecution-client
+# The abuild user is not setup at post time so we use the numeric id
+chown -R 399:399 /home/abuild/src/droid/prebuilts/remoteexecution-client
+%files prebuilts-remoteexecution-client
+%defattr(-,root,root,-)
+/home/abuild/src/droid/prebuilts/remoteexecution-client
 
 %post prebuilts-rust-android-bp
 # The abuild user is not setup at post time so we use the numeric id
