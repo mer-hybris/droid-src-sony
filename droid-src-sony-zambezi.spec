@@ -14,7 +14,7 @@
 %define dhs_trees build development libcore platform_testing toolchain device libnativehelper tools art cts external vendor bionic dalvik frameworks sdk bootable hardware packages system developers kernel pdk test prebuilts/abi-dumps prebuilts/asuite prebuilts/bazel prebuilts/build-tools prebuilts/bundletool prebuilts/checkcolor prebuilts/checkstyle prebuilts/clang-tools prebuilts/clang prebuilts/cmdline-tools prebuilts/devtools prebuilts/gcc prebuilts/go prebuilts/gradle-plugin prebuilts/jdk prebuilts/ktlint prebuilts/manifest-merger prebuilts/maven_repo prebuilts/misc prebuilts/module_sdk prebuilts/ndk prebuilts/r8 prebuilts/remoteexecution-client prebuilts/rust/Android.bp prebuilts/rust/linux-x86 prebuilts/rust/soong prebuilts/sdk prebuilts/tools prebuilts/vndk
 
 %define device_variant -user
-%define lunch_device aosp_xqdc54-ap1a
+%define lunch_device aosp_xqdc54-ap2a
 %define pre_actions sudo update-java-alternatives -s java-1.8.0-openjdk-amd64
 
 %define post_build_actions mv rpm/patches patches; /bin/sh ./rpm/apply-patches.sh
